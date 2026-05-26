@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: SapaBotSlide2026
+      POSTGRES_DB: sapa_bot_slide
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sapa_bot_slide || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  bot:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+    entrypoint: /app/scripts/entrypoint.sh
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:SapaBotSlide2026@db:5432/sapa_bot_slide
+    command: python -m bot.main
+
+volumes:
+  db_data:

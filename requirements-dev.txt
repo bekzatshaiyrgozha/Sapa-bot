@@ -1,0 +1,6 @@
+pytest>=7.0
+pytest-asyncio>=0.21
+pytest-mock>=3.10
+aiosqlite>=0.18
+python-pptx>=0.6.21
+pdfplumber>=0.7.6

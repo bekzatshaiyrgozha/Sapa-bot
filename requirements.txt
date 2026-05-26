@@ -1,0 +1,10 @@
+python-telegram-bot[asyncio]==20.*
+SQLAlchemy>=1.4
+psycopg2-binary
+asyncpg
+greenlet
+python-pptx
+pdfplumber
+openai
+APScheduler
+python-dotenv
